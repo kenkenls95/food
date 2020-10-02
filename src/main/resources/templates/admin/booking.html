@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/dashboard :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Booking</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <div th:replace="fragments/dashboard :: top"></div>
+
+    <div class="content-wrapper">
+        <div th:replace="fragments/dashboard :: content"></div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <button style="margin: 15px 10px" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModal"
+                        th:onclick="'detailOrder(' + ${orderId} + ');'">
+                    Xem giỏ
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="padding: 10px 15px">
+                    <table id="listProduct">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Mô Tả</th>
+                            <th>Danh Mục</th>
+                            <th>Giá Tiền</th>
+                            <th>Hình Ảnh</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="p, i : ${lstProduct}">
+                            <tr>
+                                <td th:text="${i.index + 1}"></td>
+                                <td th:text="${p.name}"></td>
+                                <td th:text="${p.description}"></td>
+                                <td style="display: flex;">
+                                    <th:block th:each="c : ${p.category}">
+                                        <p class="border" style="padding: 0px 5px;margin: 0px 5px"
+                                           th:text="${c.name}"></p>
+                                    </th:block>
+                                </td>
+                                <td class="price fPrice" th:text="${p.price}"></td>
+                                <td><img style="width: 100px;height: 100px" th:src="${p.documentVM.mainImage}" alt="">
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary"
+                                            th:onclick="'addOrder(' + ${orderId} + ',' + ${p.getProductId()} + ')'">
+                                        Thêm
+                                    </button>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12 col-md-offset-1">
+                                <table class="table table-hover" id="orderDetail">
+                                    <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th class="text-center">Price</th>
+                                        <th class="text-center">Total</th>
+                                        <th> </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="col-sm-8 col-md-6">
+                                            <div class="media">
+                                                <a class="thumbnail pull-left" href="#">
+                                                    <img class="media-object"
+                                                         src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                         style="width: 72px; height: 72px;">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="#">Product name</a></h4>
+                                                    <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                                    <span>Status: </span><span
+                                                        class="text-success"><strong>In Stock</strong></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                                            <input type="email" class="form-control" id="exampleInputEmail1" value="3">
+                                        </td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                                        <td class="col-sm-1 col-md-1">
+                                            <button type="button" class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-remove"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <table class="table table-hover" id="result">
+                                    <thead>
+                                    <tr>
+                                        <th> </th>
+                                        <th> </th>
+                                        <th> </th>
+                                        <th> </th>
+                                        <th> </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>  </td>
+                                        <td>  </td>
+                                        <td>  </td>
+                                        <td><h3>Total</h3></td>
+                                        <td class="text-right"><h3><strong id="totalBill"></strong></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button type="button" th:onclick="'createBill(' + ${orderId} + ');'"  id="createBill" class="btn btn-success">
+                                                Checkout <span class="glyphicon glyphicon-play"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/dashboard :: footer"></div>
+
+</div>
+<div th:replace="fragments/dashboard :: common-js"></div>
+<script th:src="@{~/js/admin/booking.js}"></script>
+</body>
+</html>

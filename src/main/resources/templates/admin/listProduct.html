@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/dashboard :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Home page</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <div th:replace="fragments/dashboard :: top"></div>
+
+    <div class="content-wrapper">
+        <div th:replace="fragments/dashboard :: content"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <button style="margin: 15px 10px" class="btn btn-primary" id="addNew"
+                        th:onclick="'openPopup(\'' + @{/admin/prepareInsertProduct} + '\',\'insertProduct\', 600, 1000);'">
+                    Thêm mới sản phẩm
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="padding: 10px 15px">
+                    <table id="listProduct">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Mô Tả</th>
+                            <th>Danh Mục</th>
+                            <th>Giá Tiền</th>
+                            <th>Hình Ảnh</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="p, i : ${lstProduct}">
+                            <tr>
+                                <td th:text="${i.index + 1}"></td>
+                                <td th:text="${p.name}"></td>
+                                <td th:text="${p.description}"></td>
+                                <td style="display: flex;">
+                                    <th:block th:each="c : ${p.category}">
+                                        <p class="border" style="padding: 0px 5px;margin: 0px 5px"
+                                           th:text="${c.name}"></p>
+                                    </th:block>
+                                </td>
+                                <td class="price fPrice" th:text="${p.price}"></td>
+                                <td ><img style="width: 100px;height: 100px" th:src="${p.documentVM.mainImage}" alt=""></td>
+                                <td>
+                                    <button class="btn btn-primary"
+                                            th:onclick="'openPopup(\'' + @{/admin/prepareUpdateProduct/{id}(id=${p.productId})} + '\',\'updateProduct\', 600, 1000);'">
+                                        Sửa
+                                    </button>
+                                    <button class="btn btn-warning"
+                                            th:onclick="'openPopup(\'' + @{/admin/deleteProduct/{id}(id=${p.productId})} + '\',\'deleteProduct\', 600, 1000);'">
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/dashboard :: footer"></div>
+
+</div>
+<div th:replace="fragments/dashboard :: common-js"></div>
+<script th:src="@{~/js/admin/listProduct.js}"></script>
+</body>
+</html>

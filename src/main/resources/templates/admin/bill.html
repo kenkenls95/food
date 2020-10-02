@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/dashboard :: common-css">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Bill</title>
+    <style>
+        body {
+            background: #eee
+        }
+    </style>
+</head>
+<body>
+<div id="bill" class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <div class="p-3 bg-white rounded">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1 class="text-uppercase">Invoice</h1>
+                        <div class="billed"><span class="font-weight-bold text-uppercase">Địa chỉ :</span><span
+                                class="ml-1">ở đâu đó</span></div>
+                        <div class="billed"><span class="font-weight-bold text-uppercase">Số điện thoại :</span><span
+                                class="ml-1">0123456789</span></div>
+                        <div class="billed"><span class="font-weight-bold text-uppercase">Ngày :</span><span
+                                class="ml-1" th:text="${order.date}"></span></div>
+                        <div class="billed"><span class="font-weight-bold text-uppercase"></span><span class="ml-1"
+                                                                                                       th:text="${order.name}"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right mt-3">
+                        <h4 class="text-danger mb-0">LanAnh Quán</h4><span>lananhquan.com</span>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="p, i : ${content}">
+                                <tr>
+                                    <td th:text="${i.index + 1}"></td>
+                                    <td th:text="${p.name}"></td>
+                                    <td th:text="${p.quantity}"></td>
+                                    <td class="fPrice" th:text="${p.price}"></td>
+                                    <td class="fPrice" th:text="${p.price * p.quantity}"></td>
+                                </tr>
+                            </th:block>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td class="fPrice" th:text="${totalPrice}"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td th:text="${totalPriceText}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <form id="bill" class="form-horizontal" action="/admin/booking/pay" th:object="${payment}"
+                      th:method="post">
+                    <input type="text" hidden th:field="*{paymentId}" th:value="${payment.paymentId}">
+                    <input type="text" hidden th:field="*{orderId}" th:value="${payment.orderId}">
+                    <input type="text" hidden th:field="*{price}" th:value="${payment.price}">
+                    <input type="text" hidden th:field="*{extra}" th:value="${payment.extra}">
+                    <input type="text" hidden th:field="*{status}" th:value="${payment.status}">
+                    <div class="text-right mb-3">
+                        <button class="btn btn-danger btn-sm mr-5" type="submit" th:if="${payment.status == 1}">Pay Now
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="billed"><span class="font-weight-bold text-uppercase">Chúc quý khách ngon miêng</span></div>
+            <p>Nhận đặt hàng, freeship đơn hàng dưới 5km</p>
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="fragments/dashboard :: common-js"></div> 
+</html>
