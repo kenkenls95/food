@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/dashboard :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Home page</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <div th:replace="fragments/dashboard :: top"></div>
+
+    <div class="content-wrapper">
+        <div th:replace="fragments/dashboard :: content"></div>
+
+    </div>
+
+
+    <div th:replace="fragments/dashboard :: footer"></div>
+
+</div>
+<div th:replace="fragments/dashboard :: common-js"></div>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Home page</title>
+</head>
+
+<body>
+
+
+<div class="container" style="margin: 15px 15px">
+
+    <form id="formProduct" class="form-horizontal" action="/admin/updateProduct" th:object="${product}"
+          th:method="post">
+        <input type="hidden" th:field="*{productId}">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="name">Tên sản phẩm:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm" th:field="*{name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="description">Mô tả:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="description" placeholder="Mô tả" th:field="*{description}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="price">Giá tiền:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="price" placeholder="Giá tiền" th:field="*{price}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="categoryP">Danh mục:</label>
+            <div class="col-sm-10">
+                <select id="categoryP" tag="Danh mục" class="selectpicker" multiple data-live-search="true"
+                        th:field="*{categoryTag}">
+                    <th:block th:each="c : ${category}">
+                        <option th:value="${c.categoryId}" th:text="${c.shortName}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="file">File Ảnh Chính :</label>
+            <div class="col-sm-10">
+                <input onchange="uploadFile(this, 'mainImage')" type="file" class="form-control" id="file">
+            </div>
+        </div>
+        <input type="hidden" th:field="*{mainImage}" id="mainImage">
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="file">File Ảnh Phụ (có thể nhiều ảnh):</label>
+            <div class="col-sm-10">
+                <input onchange="uploadFile(this, 'images')" type="file" class="form-control" id="file" multiple>
+            </div>
+        </div>
+        <input type="hidden" th:field="*{childImages}" id="images">
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button onclick="if(!validate('formProduct')) return false;" type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+
+<div th:replace="fragments/common :: common-js"></div>
+<script>
+    $('#categoryP').selectpicker();
+
+
+</script>
+</body>
+</html>

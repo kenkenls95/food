@@ -5,6 +5,15 @@ public class OrderDetailPJ {
     private Long productId;
     private Long orderDetailId;
     private Long quantity;
+    private Long type;
+
+    public Long getType() {
+        return type;
+    }
+
+    public void setType(Long type) {
+        this.type = type;
+    }
 
     public Long getOrderDetailId() {
         return orderDetailId;

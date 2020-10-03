@@ -1,10 +1,7 @@
 package application.controller.api;
 
 import application.common.Common;
-import application.data.entity.OrderDetail;
-import application.data.entity.OrderProduct;
-import application.data.entity.Payment;
-import application.data.entity.Product;
+import application.data.entity.*;
 import application.data.repository.*;
 import application.data.service.ProductService;
 import application.model.ResponseModel;
@@ -107,6 +104,10 @@ public class OrderController {
             }
             payment.setPrice(new BigDecimal(totalPrice));
             iPayment.save(payment);
+            Long type = o.getType();
+            Order oo = iOrder.getOne(o.getOrderId());
+            oo.setType(type);
+            iOrder.save(oo);
             return Common.setMetaData(true);
         } catch (Exception e) {
             e.printStackTrace();

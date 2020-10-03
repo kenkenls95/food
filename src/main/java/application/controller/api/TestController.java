@@ -4,6 +4,8 @@ import application.common.Common;
 import application.controller.BaseController;
 import application.data.entity.Category;
 import application.data.entity.Product;
+import application.data.repository.IPayment;
+import application.data.repository.IPaymentDetail;
 import application.data.repository.IProduct;
 import application.data.service.CategoryService;
 import application.data.service.ProductService;
@@ -18,15 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController extends BaseController<ProductService, Product> {
 
     private ProductService productService;
-
-
-    public TestController(ProductService productService) {
-        setService(productService);
-        this.productService = productService;
-    }
-
-    @GetMapping("/test")
-    public ResponseModel get(){
-        return Common.setMetaData(productService.searchProduct(""));
-    }
+//
+//    @Autowired
+//    IPaymentDetail iPaymentDetail;
+//
+//
+//    public TestController(ProductService productService) {
+//        setService(productService);
+//        this.productService = productService;
+//    }
+//
+//    @GetMapping("/test")
+//    public ResponseModel get(){
+//        return Common.setMetaData(iPaymentDetail.chart());
+//    }
 }

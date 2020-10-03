@@ -3,6 +3,7 @@ package application.data.entity;
 import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,7 @@ public class PaymentDetail {
     private String status;
     private String author;
     private String type;
+    private Date date;
 
     @Basic
     @Id
@@ -97,6 +99,16 @@ public class PaymentDetail {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Basic
+    @Column(name = "date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

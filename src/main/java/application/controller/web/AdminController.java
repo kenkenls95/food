@@ -256,5 +256,15 @@ public class AdminController {
         return "updateAndClose";
     }
 
+    @GetMapping("/chart")
+    String chart(Model model) {
+        try {
+            model.addAttribute("category", new CategoryVM());
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        return "admin/prepareCat";
+    }
 
 }
